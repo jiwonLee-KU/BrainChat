@@ -1,0 +1,664 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NeuroTalk Demo Page</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+    <!-- 부가적인 테마 -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"
+    />
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+      .description {
+        font-size: 15px;
+        padding-left: 20px;
+        width: 80%;
+      }
+
+      .subtitle {
+        padding-left: 20px;
+      }
+
+      .subsubtitle {
+        padding-left: 30px;
+      }
+      h2 {
+        padding-left: 7px;
+      }
+      td {
+        width: 400px;
+        text-align: center;
+        white-space: nowrap;
+        padding-left: 15px;
+      }
+
+      .table_title {
+        background-color: rgba(0, 47, 255, 0.158);
+      }
+
+      .table_audio {
+        background-color: white;
+      }
+
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+      .bts_audio {
+        text-align: left;
+      }
+
+      .section {
+        margin: 0;
+        width: 90%;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body style="padding-left: 20px">
+    <h1 style="display: inline">
+      <b
+        >NeuroTalk: Voice Reconstruction from Brain Signals<a name="content"></a
+      ></b>
+    </h1>
+
+    <br />
+
+    <h2 class="toc_title">Contents</h2>
+    <div id="toc_container">
+      <ul>
+        <li>
+          <a href="#video-demo">Section 1: Video - Experimental Paradigm</a>
+        </li>
+        <li><a href="#audio-demo">Section 2: Audio Demo</a></li>
+        <ul>
+          <li><a href="#participant-1">Reconstruction - Participant 1</a></li>
+          <li><a href="#participant-2">Reconstruction - Participant 2</a></li>
+          <li><a href="#failure-demo">Failure cases</a></li>
+        </ul>
+        <li><a href="#model">Section 3: Model</a></li>
+        <ul>
+          <li>
+            <a href="#bts-frameworks">Overall Brain-to-speech frameworks</a>
+          </li>
+          <li><a href="#architecture-detail">The architecture details</a></li>
+        </ul>
+        <li><a href="#code">Section 4: Code</a></li>
+        <li><a href="#data">Section 5: Data and materials availability</a></li>
+      </ul>
+    </div>
+    <br />
+    <section class="section">
+      <h2>
+        <b>Section 1: Video - Experimental Paradigm</b><a name="video-demo"></a>
+        <a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h2>
+      <br />
+      <iframe
+        class="subtitle"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/eX4IB0q5c0A"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <br />
+    </section>
+
+    <br />
+    <!-- Audio Demo Start----------------------------------------------------->
+    <section class="section">
+      <h2>
+        <b>Section 2:Audio Demo</b><a name="audio-demo"></a
+        ><a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h2>
+      <h3>
+        <b class="subtitle">Reconstruction - Participant 1</b>
+        <a name="participant-1"></a>
+        <a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h3>
+      <!--word 1------------>
+      <div class="subsubtitle">
+        <h4>
+          <p>
+            <b>Word : <i>"Hello"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/hello/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/hello/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/hello/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/hello/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 2------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Help me"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/helpme/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/helpme/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/helpme/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/helpme/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 3------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Pain"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/pain/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/pain/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/pain/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/pain/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 4------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Water"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/water/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/water/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/water/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/water/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 5------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Yes"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/yes/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/yes/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/yes/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub1/yes/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+      </div>
+        <!--sub2--------------->
+      <h3>
+        <b class="subtitle">Reconstruction - Participant 2</b>
+        <a name="participant-2"></a>
+        <a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h3>
+      <div class="subsubtitle">
+        <!--word 1------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Hello"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/hello/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/hello/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/hello/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/hello/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 2------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Help me"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/helpme/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/helpme/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/helpme/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/helpme/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 3------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Pain"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/pain/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/pain/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/pain/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/pain/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 4------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Water"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/water/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/water/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/water/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/water/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+        <br />
+        <!--word 5------------>
+        <h4>
+          <p>
+            <b>Word : <i>"Yes"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/yes/org/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/yes/target/Target.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">Spoken EEG</th>
+            <th style="text-align: center">Imagined EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/yes/spoken/spoken.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/sub2/yes/imagined/imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+      </div>
+      <br />
+
+      <!--Failure cases--------------->
+      <h3>
+        <b class="subtitle">Failure cases</b><a name="failure-demo"></a
+        ><a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h3>
+      <div class="subsubtitle">
+        <h4>
+          <p>
+            <b>Word : <i>"Thank you"</i></b>
+          </p>
+        </h4>
+        <table width="600" height="200" border="1">
+          <tr class="table_title">
+            <th style="text-align: center">Original Audio</th>
+            <th style="text-align: center">Mel + Vocoder</th>
+            <th style="text-align: center">Spoken EEG</th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/failure/Original.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/failure/Target.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/failure/CER0_spoken.wav" />
+              </audio>
+            </th>
+          </tr>
+          <tr class="table_title">
+            <th style="text-align: center">
+              Imagined EEG (CER=0)<br /><i>"THANK YOU"</i>
+            </th>
+            <th style="text-align: center">
+              Imagined EEG (CER=50)<br /><i>"THANKEE"</i>
+            </th>
+            <th style="text-align: center">
+              Imagined EEG (CER=90)<br /><i>"AVE"</i>
+            </th>
+          </tr>
+          <tr class="table_audio">
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/failure/CER0_imagined.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/failure/CER50_THANKEE_imagined.wav" />
+              </audio>
+            </th>
+            <th style="text-align: center">
+              <audio controls>
+                <source src="./audio/failure/CER90_AVE_imagined.wav" />
+              </audio>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <br />
+   
+    <section class="section">
+      <h2>
+        <b>Section 3: Model</b><a name="model"></a>
+        <a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h2>
+      <div class="subtitle">
+        <h3>
+          <b>Overall NeuroTalk frameworks</b><a name="bts-frameworks"></a>
+        </h3>
+        <div class="subsubtitle">
+          <img src="./image/figure1.jpg" width="800" />
+          <br />
+          <p style="width: 80%">Overall frameworks.</p>
+        </div>
+      </div>
+      <br />
+      <div class="subtitle">
+        <h3>
+          <b>The architecture details</b><a name="architecture-detail"></a>
+        </h3>
+        <div class="subsubtitle">
+          <img src="./image/figure2.jpg" width="800" />
+          <br />
+          <p style="width: 80%">The architecture details in (a) generator, (b) discriminator, and (c) MRF module.</p>
+        </div>
+      </div>
+    </section>
+    <br />
+    <section class="section">
+      <h2>
+        <b>Section 4: Code</b><a name="code"></a>
+        <a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h2>
+      <p class="subtitle" style="width: 80%">
+        Code is available at https://github.com/youngeun1209/NeuroTalk
+      </p>
+    </section>
+    <section class="section">
+      <h2>
+        <b>Section 5: Data and materials availability</b><a name="data"></a
+        ><a style="font-size: 15px" href="#content">&ltTop&gt</a>
+      </h2>
+      <p class="subtitle" style="width: 80%">
+        Sample dataset is available at https://github.com/youngeun1209/NeuroTalk 
+      </p>
+    </section>
+  </body>
+</html>
